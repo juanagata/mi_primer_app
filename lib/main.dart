@@ -55,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String? _fechaHoraActual;
 
   void _incrementCounter() {
     setState(() {
@@ -64,6 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+  void _mostrarFechaHoraActual() {
+    final ahora = DateTime.now();
+    setState(() {
+      _fechaHoraActual = '${ahora.day.toString().padLeft(2, '0')}/${ahora.month.toString().padLeft(2, '0')}/${ahora.year} ${ahora.hour.toString().padLeft(2, '0')}:${ahora.minute.toString().padLeft(2, '0')}:${ahora.second.toString().padLeft(2, '0')}';
     });
   }
 
@@ -109,6 +117,18 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: _mostrarFechaHoraActual,
+              child: const Text('Mostrar fecha y hora actual'),
+            ),
+            if (_fechaHoraActual != null) ...[
+              const SizedBox(height: 12),
+              Text(
+                'Fecha y hora actual: $_fechaHoraActual',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
           ],
         ),
       ),
